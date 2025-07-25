@@ -112,3 +112,46 @@ app.*.map.json
 !.idea/codeStyles/
 !.idea/dictionaries/
 !.idea/runConfigurations/
+
+# Firebase config
+**/firebase_options_*.dart  
+**/firebase_options.dart  
+**/google-services.json
+**/GoogleService-Info.plist
+.firebaserc
+
+# Environment and secret files
+.env
+.env.*
+*.env
+.secret
+.secret.*
+
+# API Keys and credentials
+**/api_keys.dart
+**/secrets.dart
+**/credentials.json
+**/*_credentials.json
+**/*_config.json
+
+# Local development files
+*.local
+
+# IDE and editor files
+.vscode/settings.json
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+
+# Temporary and cache files
+*.tmp
+*.temp
+.cache/
+.temp/
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
