@@ -1,0 +1,46 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "voice-assistant-test-script-2",
+          "appId": "1:80661988891:android:8106d4bb60c1f405f65abe",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "voice-assistant-test-script-2",
+          "appId": "1:80661988891:ios:fd36e05706dc0482f65abe",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "voice-assistant-test-script-2",
+          "configurations": {
+            "android": "1:80661988891:android:8106d4bb60c1f405f65abe",
+            "ios": "1:80661988891:ios:fd36e05706dc0482f65abe"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ]
+}
