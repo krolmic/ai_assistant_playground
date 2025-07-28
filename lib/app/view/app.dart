@@ -14,6 +14,9 @@ class App extends StatelessWidget {
         RepositoryProvider(
           create: (context) => SpeechToTextRepository(),
         ),
+        RepositoryProvider(
+          create: (context) => TextResponsesRepository(),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(
