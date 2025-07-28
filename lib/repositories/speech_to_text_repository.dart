@@ -1,3 +1,4 @@
+import 'package:flutter_fimber/flutter_fimber.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -10,16 +11,11 @@ class SpeechToTextRepository {
   /// Initialize the speech to text service
   /// Returns true if initialization was successful
   Future<bool> init() async {
-    try {
-      final available = await _speechToText.initialize(
-        onStatus: (status) => print('Speech status: $status'),
-        onError: (error) => print('Speech error: $error'),
-      );
-      return available;
-    } catch (e) {
-      print('Failed to initialize speech to text: $e');
-      return false;
-    }
+    final available = await _speechToText.initialize(
+      onStatus: (status) => Fimber.v('Speech status: $status'),
+      onError: (error) => Fimber.e('Speech error: $error'),
+    );
+    return available;
   }
 
   /// Start listening for speech input
@@ -29,7 +25,7 @@ class SpeechToTextRepository {
     void Function()? onListening,
   }) async {
     if (!_speechToText.isAvailable) {
-      print('Speech to text is not available');
+      Fimber.e('Speech to text is not available');
       return;
     }
 

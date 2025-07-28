@@ -1,6 +1,7 @@
 import 'package:ai_assistant_1/repositories/repositories.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_fimber/flutter_fimber.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 
 part 'voice_assistant_state.dart';
@@ -25,9 +26,17 @@ class VoiceAssistantCubit extends Cubit<VoiceAssistantState> {
   }
 
   Future<void> _initializeSpeechToText() async {
-    final initialized = await _speechToTextRepository.init();
-    if (!initialized) {
-      print('Failed to initialize speech to text');
+    try {
+      final initialized = await _speechToTextRepository.init();
+      if (!initialized) {
+        Fimber.e('Failed to initialize speech to text');
+      }
+    } catch (e, stackTrace) {
+      Fimber.e(
+        'Failed to initialize speech to text: $e',
+        ex: e,
+        stacktrace: stackTrace,
+      );
     }
   }
 
@@ -40,8 +49,12 @@ class VoiceAssistantCubit extends Cubit<VoiceAssistantState> {
       );
 
       emit(state.copyWith(sessionId: sessionId));
-    } catch (e) {
-      print('Failed to initialize chat session: $e');
+    } catch (e, stackTrace) {
+      Fimber.e(
+        'Failed to initialize chat session: $e',
+        ex: e,
+        stacktrace: stackTrace,
+      );
     }
   }
 
@@ -99,7 +112,12 @@ class VoiceAssistantCubit extends Cubit<VoiceAssistantState> {
           lastResponseText: response,
         ),
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
+      Fimber.e(
+        'Failed to get response: $e',
+        ex: e,
+        stacktrace: stackTrace,
+      );
       emit(
         state.copyWith(
           responseStatus: ResponseStatus.error,
