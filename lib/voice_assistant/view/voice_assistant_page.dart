@@ -11,6 +11,7 @@ class VoiceAssistantPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => VoiceAssistantCubit(
         speechToTextRepository: context.read(),
+        textResponsesRepository: context.read(),
       ),
       child: const VoiceAssistantView(),
     );
