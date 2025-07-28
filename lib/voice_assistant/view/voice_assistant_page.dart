@@ -33,8 +33,8 @@ class VoiceAssistantView extends StatelessWidget {
               gradient: RadialGradient(
                 radius: 1.5,
                 colors: [
-                  Colors.purple.withOpacity(0.1),
-                  Colors.blue.withOpacity(0.05),
+                  Colors.purple.withValues(alpha: 0.1),
+                  Colors.blue.withValues(alpha: 0.05),
                   Colors.transparent,
                 ],
               ),
@@ -58,7 +58,7 @@ class VoiceAssistantView extends StatelessWidget {
                       return Text(
                         isListening ? 'Listening...' : 'Tap to speak',
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.7),
+                          color: Colors.white.withValues(alpha: 0.7),
                           fontSize: 16,
                           fontWeight: FontWeight.w300,
                         ),
@@ -68,7 +68,7 @@ class VoiceAssistantView extends StatelessWidget {
                           .then()
                           .shimmer(
                             duration: 1500.ms,
-                            color: Colors.purple.withOpacity(0.3),
+                            color: Colors.purple.withValues(alpha: 0.3),
                           );
                     },
                   ),
@@ -115,13 +115,13 @@ class VoiceAssistantView extends StatelessWidget {
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                                 colors: [
-                                  Colors.purple.shade400,
-                                  Colors.purple.shade700,
+                                  Colors.purple.withValues(alpha: 0.4),
+                                  Colors.purple.withValues(alpha: 0.7),
                                 ],
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.purple.withOpacity(0.5),
+                                  color: Colors.purple.withValues(alpha: 0.5),
                                   blurRadius: 20,
                                   spreadRadius: 2,
                                 ),
@@ -176,10 +176,10 @@ class VoiceAssistantView extends StatelessWidget {
                               vertical: 16,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.05),
+                              color: Colors.white.withValues(alpha: 0.05),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: Colors.white.withOpacity(0.1),
+                                color: Colors.white.withValues(alpha: 0.1),
                               ),
                             ),
                             child: Text(
@@ -218,7 +218,7 @@ class VoiceAssistantView extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: Colors.purple.withOpacity(0.3),
+          color: Colors.purple.withValues(alpha: 0.3),
         ),
       ),
     )
