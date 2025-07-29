@@ -18,7 +18,6 @@ class VoiceAssistantCubit extends Cubit<VoiceAssistantState> {
 
   final SpeechToTextRepository _speechToTextRepository;
   final TextResponsesRepository _textResponsesRepository;
-  String _currentSpeechText = '';
 
   Future<void> _initialize() async {
     await _initializeSpeechToText();
@@ -63,8 +62,6 @@ class VoiceAssistantCubit extends Cubit<VoiceAssistantState> {
       return;
     }
 
-    _currentSpeechText = '';
-
     emit(
       state.copyWith(
         listeningToSpeechStatus: ListeningToSpeechStatus.listening,
@@ -86,12 +83,11 @@ class VoiceAssistantCubit extends Cubit<VoiceAssistantState> {
     emit(
       state.copyWith(
         listeningToSpeechStatus: ListeningToSpeechStatus.idle,
-        lastRequestText: _currentSpeechText,
       ),
     );
 
-    if (_currentSpeechText.isNotEmpty && state.sessionId.isNotEmpty) {
-      await _getResponseText(_currentSpeechText);
+    if (state.lastRequestText.isNotEmpty && state.sessionId.isNotEmpty) {
+      await _getResponseText(state.lastRequestText);
     }
   }
 
@@ -128,7 +124,11 @@ class VoiceAssistantCubit extends Cubit<VoiceAssistantState> {
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
-    _currentSpeechText = result.recognizedWords;
+    emit(
+      state.copyWith(
+        lastRequestText: result.recognizedWords,
+      ),
+    );
 
     // If the result is final, stop listening automatically
     if (result.finalResult) {
