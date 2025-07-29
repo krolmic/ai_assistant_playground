@@ -62,7 +62,7 @@ export async function createChatSession(
     model: modelMap[modelType],
     system: systemInstructions,
     config: {
-      maxOutputTokens: maxTokens ?? 1024,
+      maxOutputTokens: maxTokens ?? 2048,
       temperature: temperature ?? 0.7,
       stopSequences: stopSequences ?? [],
     },
@@ -87,7 +87,7 @@ export async function sendMessagesToSession(
     model: modelMap[modelType],
     system: systemInstructions,
     config: {
-      maxOutputTokens: maxTokens ?? 1024,
+      maxOutputTokens: maxTokens ?? 2048,
       temperature: temperature ?? 0.7,
       stopSequences: stopSequences ?? [],
     },
