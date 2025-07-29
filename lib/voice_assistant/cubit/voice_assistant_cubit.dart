@@ -1,4 +1,5 @@
 import 'package:ai_assistant_1/repositories/repositories.dart';
+import 'package:ai_assistant_1/voice_assistant/models/models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_fimber/flutter_fimber.dart';
@@ -86,8 +87,21 @@ class VoiceAssistantCubit extends Cubit<VoiceAssistantState> {
       ),
     );
 
-    if (state.lastRequestText.isNotEmpty && state.sessionId.isNotEmpty) {
-      await _getResponseText(state.lastRequestText);
+    if (state.currentSpeechText.isNotEmpty && state.sessionId.isNotEmpty) {
+      final userMessage = Message(
+        text: state.currentSpeechText,
+        author: MessageAuthor.user,
+        timestamp: DateTime.now(),
+      );
+
+      emit(
+        state.copyWith(
+          messages: [...state.messages, userMessage],
+          currentSpeechText: '',
+        ),
+      );
+
+      await _getResponseText(userMessage.text);
     }
   }
 
@@ -102,10 +116,16 @@ class VoiceAssistantCubit extends Cubit<VoiceAssistantState> {
         systemInstructions: 'You are a helpful AI assistant.',
       );
 
+      final assistantMessage = Message(
+        text: response,
+        author: MessageAuthor.assistant,
+        timestamp: DateTime.now(),
+      );
+
       emit(
         state.copyWith(
           responseStatus: ResponseStatus.success,
-          lastResponseText: response,
+          messages: [...state.messages, assistantMessage],
         ),
       );
     } catch (e, stackTrace) {
@@ -114,10 +134,17 @@ class VoiceAssistantCubit extends Cubit<VoiceAssistantState> {
         ex: e,
         stacktrace: stackTrace,
       );
+
+      final errorMessage = Message(
+        text: 'Failed to get response: $e',
+        author: MessageAuthor.assistant,
+        timestamp: DateTime.now(),
+      );
+
       emit(
         state.copyWith(
           responseStatus: ResponseStatus.error,
-          lastResponseText: 'Failed to get response: $e',
+          messages: [...state.messages, errorMessage],
         ),
       );
     }
@@ -126,11 +153,10 @@ class VoiceAssistantCubit extends Cubit<VoiceAssistantState> {
   void _onSpeechResult(SpeechRecognitionResult result) {
     emit(
       state.copyWith(
-        lastRequestText: result.recognizedWords,
+        currentSpeechText: result.recognizedWords,
       ),
     );
 
-    // If the result is final, stop listening automatically
     if (result.finalResult) {
       stopListening();
     }

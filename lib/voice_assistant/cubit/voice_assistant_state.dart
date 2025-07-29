@@ -7,31 +7,31 @@ enum ResponseStatus { initial, loading, success, error }
 class VoiceAssistantState extends Equatable {
   const VoiceAssistantState({
     this.listeningToSpeechStatus = ListeningToSpeechStatus.idle,
-    this.lastRequestText = '',
+    this.currentSpeechText = '',
     this.responseStatus = ResponseStatus.initial,
-    this.lastResponseText = '',
+    this.messages = const [],
     this.sessionId = '',
   });
 
   final ListeningToSpeechStatus listeningToSpeechStatus;
-  final String lastRequestText;
+  final String currentSpeechText;
   final ResponseStatus responseStatus;
-  final String lastResponseText;
+  final List<Message> messages;
   final String sessionId;
 
   VoiceAssistantState copyWith({
     ListeningToSpeechStatus? listeningToSpeechStatus,
-    String? lastRequestText,
+    String? currentSpeechText,
     ResponseStatus? responseStatus,
-    String? lastResponseText,
+    List<Message>? messages,
     String? sessionId,
   }) {
     return VoiceAssistantState(
       listeningToSpeechStatus:
           listeningToSpeechStatus ?? this.listeningToSpeechStatus,
-      lastRequestText: lastRequestText ?? this.lastRequestText,
+      currentSpeechText: currentSpeechText ?? this.currentSpeechText,
       responseStatus: responseStatus ?? this.responseStatus,
-      lastResponseText: lastResponseText ?? this.lastResponseText,
+      messages: messages ?? this.messages,
       sessionId: sessionId ?? this.sessionId,
     );
   }
@@ -39,9 +39,9 @@ class VoiceAssistantState extends Equatable {
   @override
   List<Object> get props => [
         listeningToSpeechStatus,
-        lastRequestText,
+        currentSpeechText,
         responseStatus,
-        lastResponseText,
+        messages,
         sessionId,
       ];
 }
