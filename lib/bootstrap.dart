@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:ai_assistant_1/firebase_options.dart';
 import 'package:bloc/bloc.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,6 +69,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  FirebaseFunctions.instance.useFunctionsEmulator('127.0.0.1', 5001);
 
   runApp(await builder());
 }
