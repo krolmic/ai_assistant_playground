@@ -12,7 +12,7 @@ class TextResponsesRepository {
     required String systemInstructions,
     required double temperature,
   }) async {
-    final callable = _functions.httpsCallable('initChatFlow');
+    final callable = _functions.httpsCallable('initChat');
     final result = await callable.call<Map<String, dynamic>>({
       'modelType': modelType,
       'systemInstructions': systemInstructions,
@@ -52,7 +52,7 @@ class TextResponsesRepository {
   Future<void> deleteSession({
     required String sessionId,
   }) async {
-    final callable = _functions.httpsCallable('deleteSessionFlow');
+    final callable = _functions.httpsCallable('deleteChatSession');
     await callable.call<void>({
       'sessionId': sessionId,
     });
