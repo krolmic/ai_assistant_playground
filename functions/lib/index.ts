@@ -129,13 +129,23 @@ export async function generateImage(
   modelType: ImageModelType,
   prompt: string,
 ): Promise<string> {
+  let config: any = {};
+
+  switch (modelType) {
+    case "dallE":
+      config = {
+        size: "1024x1024",
+        style: "vivid",
+      };
+      break;
+    default:
+      break;
+  }
+
   const imageResponse = await ai.generate({
     model: imageModelMap[modelType],
     prompt: prompt,
-    config: {
-      size: "1024x1024",
-      style: "vivid",
-    },
+    config,
   });
   return imageResponse.media?.url ?? "";
 }
@@ -219,17 +229,17 @@ const geminiApiKey = defineSecret('GEMINI_API_KEY');
 const openAiApiKey = defineSecret('OPENAI_API_KEY');
 
 export const initChat = onCallGenkit({
-  secrets: [geminiApiKey],
+  secrets: [geminiApiKey, openAiApiKey],
 }, initChatFlow);
 
 export const sendMessages = onCallGenkit({
-  secrets: [geminiApiKey],
+  secrets: [geminiApiKey, openAiApiKey],
 }, sendMessagesFlow);
 
 export const deleteChatSession = onCallGenkit({
-  secrets: [geminiApiKey],
+  secrets: [geminiApiKey, openAiApiKey],
 }, deleteSessionFlow);
 
 export const generateImageFromPrompt = onCallGenkit({
-  secrets: [openAiApiKey],
+  secrets: [geminiApiKey, openAiApiKey],
 }, generateImageFlow);
