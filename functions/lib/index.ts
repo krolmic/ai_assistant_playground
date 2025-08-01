@@ -198,7 +198,25 @@ export const deleteSessionFlow = ai.defineFlow(
   }
 );
 
+export const generateImageFlow = ai.defineFlow(
+  {
+    name: "generateImage",
+    inputSchema: z.object({
+      modelType: z.enum(["dallE"]),
+      prompt: z.string(),
+    }),
+    outputSchema: z.object({
+      imageUrl: z.string(),
+    }),
+  },
+  async ({ modelType, prompt }) => {
+    const imageUrl = await generateImage(ai, modelType, prompt);
+    return { imageUrl };
+  }
+);
+
 const geminiApiKey = defineSecret('GEMINI_API_KEY');
+const openAiApiKey = defineSecret('OPENAI_API_KEY');
 
 export const initChat = onCallGenkit({
   secrets: [geminiApiKey],
@@ -211,3 +229,7 @@ export const sendMessages = onCallGenkit({
 export const deleteChatSession = onCallGenkit({
   secrets: [geminiApiKey],
 }, deleteSessionFlow);
+
+export const generateImageFromPrompt = onCallGenkit({
+  secrets: [openAiApiKey],
+}, generateImageFlow);
