@@ -1,5 +1,6 @@
 import { openAI } from '@genkit-ai/compat-oai/openai';
 import { googleAI } from '@genkit-ai/googleai';
+import { config } from 'dotenv';
 import { setGlobalOptions } from "firebase-functions";
 import { onCallGenkit } from 'firebase-functions/https';
 import { defineSecret } from "firebase-functions/params";
@@ -7,12 +8,18 @@ import { promises as fs } from "fs";
 import { unlink } from "fs/promises";
 import { genkit, GenkitBeta, SessionData, SessionStore, z } from "genkit/beta";
 
+if (process.env.FUNCTIONS_EMULATOR) {
+  config({ path: '.secret.local' });
+}
+
 setGlobalOptions({ maxInstances: 10 });
 
 const ai = genkit({
   plugins: [
     googleAI(),
-    openAI(),
+    openAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    }),
   ],
 });
 
