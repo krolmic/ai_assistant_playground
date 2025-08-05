@@ -163,43 +163,6 @@ class VoiceAssistantView extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Current speech text (while speaking)
-                    BlocBuilder<VoiceAssistantCubit, VoiceAssistantState>(
-                      buildWhen: (previous, current) =>
-                          previous.currentSpeechText !=
-                          current.currentSpeechText,
-                      builder: (context, state) {
-                        if (state.currentSpeechText.isEmpty) {
-                          return const SizedBox.shrink();
-                        }
-                        return Container(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 12,
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 12,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.purple.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: Colors.purple.withValues(alpha: 0.3),
-                            ),
-                          ),
-                          child: Text(
-                            state.currentSpeechText,
-                            style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.7),
-                              fontSize: 16,
-                              fontStyle: FontStyle.italic,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ).animate().fadeIn(duration: 200.ms);
-                      },
-                    ),
                     // Listening status text
                     BlocBuilder<VoiceAssistantCubit, VoiceAssistantState>(
                       buildWhen: (previous, current) =>
