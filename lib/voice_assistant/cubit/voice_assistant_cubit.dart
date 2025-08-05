@@ -43,7 +43,6 @@ class VoiceAssistantCubit extends Cubit<VoiceAssistantState> {
   Future<void> _initializeChatSession() async {
     try {
       final sessionId = await _textResponsesRepository.initChatSession(
-        modelType: 'gemini',
         systemInstructions: 'You are a helpful AI assistant.',
         temperature: 0.8,
       );
@@ -111,7 +110,6 @@ class VoiceAssistantCubit extends Cubit<VoiceAssistantState> {
 
       final response = await _textResponsesRepository.getAnswer(
         sessionId: state.sessionId,
-        modelType: 'gemini',
         messages: [message],
         systemInstructions: 'You are a helpful AI assistant.',
       );

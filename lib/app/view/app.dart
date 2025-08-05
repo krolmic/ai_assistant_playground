@@ -1,3 +1,4 @@
+import 'package:ai_assistant_1/apis/apis.dart';
 import 'package:ai_assistant_1/l10n/l10n.dart';
 import 'package:ai_assistant_1/repositories/repositories.dart';
 import 'package:ai_assistant_1/voice_assistant/voice_assistant.dart';
@@ -15,7 +16,9 @@ class App extends StatelessWidget {
           create: (context) => SpeechToTextRepository(),
         ),
         RepositoryProvider(
-          create: (context) => TextResponsesRepository(),
+          create: (context) => TextResponsesRepository(
+            api: GenkitGeminiTextResponsesApi(),
+          ),
         ),
       ],
       child: MaterialApp(
