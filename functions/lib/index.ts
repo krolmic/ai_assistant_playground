@@ -1,4 +1,5 @@
 import { openAI } from '@genkit-ai/compat-oai/openai';
+import { xAI } from '@genkit-ai/compat-oai/xai';
 import { googleAI } from '@genkit-ai/googleai';
 import { config } from 'dotenv';
 import { setGlobalOptions } from "firebase-functions";
@@ -20,14 +21,19 @@ const ai = genkit({
     openAI({
       apiKey: process.env.OPENAI_API_KEY,
     }),
+    xAI({
+      apiKey: process.env.XAI_API_KEY,
+    }),
   ],
 });
 
-type ModelType = "gemini";
+type ModelType = "gemini" | "gpt" | "grok";
 const modelMap: Record<ModelType, any> = {
   gemini: googleAI.model("gemini-2.5-flash", {
     temperature: 0.8,
   }),
+  gpt: openAI.model("gpt-4o"),
+  grok: xAI.model("grok-3-mini"),
 };
 
 type ImageModelType = "dallE";
@@ -161,7 +167,7 @@ export const initChatFlow = ai.defineFlow(
   {
     name: "initChatSession",
     inputSchema: z.object({
-      modelType: z.enum(["gemini"]),
+      modelType: z.enum(["gemini", "gpt", "grok"]),
       systemInstructions: z.string().default("You are friendly and helpful."),
       maxTokens: z.number().optional(),
       temperature: z.number().optional(),
@@ -182,7 +188,7 @@ export const sendMessagesFlow = ai.defineFlow(
     name: "sendMessagesToChat",
     inputSchema: z.object({
       sessionId: z.string(),
-      modelType: z.enum(["gemini"]),
+      modelType: z.enum(["gemini", "gpt", "grok"]),
       messages: z.array(z.string()),
       systemInstructions: z.string().default("You are friendly and helpful."),
       maxTokens: z.number().optional(),
@@ -234,13 +240,14 @@ export const generateImageFlow = ai.defineFlow(
 
 const geminiApiKey = defineSecret('GEMINI_API_KEY');
 const openAiApiKey = defineSecret('OPENAI_API_KEY');
+const xAiApiKey = defineSecret('XAI_API_KEY');
 
 export const initChat = onCallGenkit({
-  secrets: [geminiApiKey, openAiApiKey],
+  secrets: [geminiApiKey, openAiApiKey, xAiApiKey],
 }, initChatFlow);
 
 export const sendMessages = onCallGenkit({
-  secrets: [geminiApiKey, openAiApiKey],
+  secrets: [geminiApiKey, openAiApiKey, xAiApiKey],
 }, sendMessagesFlow);
 
 export const deleteChatSession = onCallGenkit({
