@@ -250,10 +250,8 @@ export const sendMessages = onCallGenkit({
   secrets: [geminiApiKey, openAiApiKey, xAiApiKey],
 }, sendMessagesFlow);
 
-export const deleteChatSession = onCallGenkit({
-  secrets: [geminiApiKey, openAiApiKey],
-}, deleteSessionFlow);
+export const deleteChatSession = onCallGenkit(deleteSessionFlow);
 
 export const generateImageFromPrompt = onCallGenkit({
-  secrets: [geminiApiKey, openAiApiKey],
+  secrets: [openAiApiKey],
 }, generateImageFlow);
