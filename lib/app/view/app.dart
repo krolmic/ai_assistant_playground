@@ -20,6 +20,9 @@ class App extends StatelessWidget {
             api: GenkitGeminiTextResponsesApi(),
           ),
         ),
+        RepositoryProvider(
+          create: (context) => ImageGenerationRepository(),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(
