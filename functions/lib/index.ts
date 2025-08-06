@@ -229,12 +229,12 @@ export const generateImageFlow = ai.defineFlow(
       prompt: z.string(),
     }),
     outputSchema: z.object({
-      imageUrl: z.string(),
+      imageBase64: z.string(),
     }),
   },
   async ({ modelType, prompt }) => {
-    const imageUrl = await generateImage(ai, modelType, prompt);
-    return { imageUrl };
+    const imageBase64 = await generateImage(ai, modelType, prompt);
+    return { imageBase64 };
   }
 );
 
