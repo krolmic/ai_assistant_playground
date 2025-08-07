@@ -1,3 +1,4 @@
+import 'package:ai_assistant_1/settings/settings.dart';
 import 'package:ai_assistant_1/voice_assistant/models/models.dart';
 import 'package:ai_assistant_1/voice_assistant/voice_assistant.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,24 @@ class VoiceAssistantView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0A0A0A),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              showDialog<void>(
+                context: context,
+                builder: (context) => const SettingsDialog(),
+              );
+            },
+          ),
+        ],
+      ),
       body: Stack(
         children: [
           // Background gradient effect

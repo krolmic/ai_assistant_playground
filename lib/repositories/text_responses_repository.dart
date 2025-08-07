@@ -5,7 +5,11 @@ class TextResponsesRepository {
     required TextResponsesApi api,
   }) : _api = api;
 
-  final TextResponsesApi _api;
+  TextResponsesApi _api;
+
+  Future<void> updateApi(TextResponsesApi api) async {
+    _api = api;
+  }
 
   Future<String> initChatSession({
     required String systemInstructions,
