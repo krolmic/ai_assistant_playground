@@ -21,7 +21,9 @@ class App extends StatelessWidget {
           ),
         ),
         RepositoryProvider(
-          create: (context) => ImageGenerationRepository(),
+          create: (context) => ImageGenerationRepository(
+            api: DallEImageGenerationApi(),
+          ),
         ),
       ],
       child: MaterialApp(
