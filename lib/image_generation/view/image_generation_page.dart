@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:ai_assistant_1/image_generation/cubit/cubit.dart';
-import 'package:ai_assistant_1/image_generation/models/models.dart';
+import 'package:ai_assistant_1/image_generation/image_generation.dart';
 import 'package:ai_assistant_1/repositories/image_generation_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
