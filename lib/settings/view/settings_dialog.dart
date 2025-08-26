@@ -23,19 +23,26 @@ class SettingsDialog extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              ...TextResponseApiType.values.map((apiType) {
-                return RadioListTile<TextResponseApiType>(
-                  title: Text(apiType.displayName),
-                  value: apiType,
-                  groupValue: state.selectedApiType,
-                  onChanged: (value) async {
-                    if (value != null) {
-                      await context.read<SettingsCubit>().setApiType(value);
-                    }
-                  },
-                  contentPadding: EdgeInsets.zero,
-                );
-              }),
+              RadioGroup<TextResponseApiType>(
+                groupValue: state.selectedApiType,
+                onChanged: (value) async {
+                  if (value != null) {
+                    await context.read<SettingsCubit>().setApiType(value);
+                  }
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ...TextResponseApiType.values.map((apiType) {
+                      return RadioListTile<TextResponseApiType>(
+                        title: Text(apiType.displayName),
+                        value: apiType,
+                        contentPadding: EdgeInsets.zero,
+                      );
+                    }),
+                  ],
+                ),
+              ),
             ],
           ),
           actions: [
