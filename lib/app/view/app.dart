@@ -1,6 +1,6 @@
 import 'package:ai_assistant_1/apis/apis.dart';
 import 'package:ai_assistant_1/app/view/main_page.dart';
-import 'package:ai_assistant_1/l10n/l10n.dart';
+import 'package:ai_assistant_1/l10n/arb/app_localizations.dart';
 import 'package:ai_assistant_1/repositories/repositories.dart';
 import 'package:ai_assistant_1/settings/settings.dart';
 import 'package:flutter/material.dart';
