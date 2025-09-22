@@ -22,7 +22,7 @@ dependencies:
   speech_to_text: ^7.3.0
 
 dev_dependencies:
-  bloc_lint: ^0.3.1
+  bloc_lint: ^0.3.2
   bloc_test: ^10.0.0
   flutter_test:
     sdk: flutter
